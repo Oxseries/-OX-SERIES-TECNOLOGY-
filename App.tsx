@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Language } from './types';
 import { TRANSLATIONS } from './constants';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Ritual from './components/Ritual';
-import AIAssistant from './components/AIAssistant';
-import PharmacyLocator from './components/PharmacyLocator';
-import Footer from './components/Footer';
-import AdvantageModal from './components/AdvantageModal';
-import ApplicationRequest from './components/ApplicationRequest';
+import Navbar from './Navbar';
+import Hero from './Hero';
+import Ingredients from './Ingredients';
+import Ritual from './Ritual';
+import ApplicationRequest from './ApplicationRequest';
+import PharmacyLocator from './PharmacyLocator';
+import Footer from './Footer';
 
 const App: React.FC = () => {
   const [lang, setLang] = useState<Language>('tr');

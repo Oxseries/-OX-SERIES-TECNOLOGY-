@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OX SERIES | Premium Collagen Peeling</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,400;0,600;0,800;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;700&family=Bebas+Neue&family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+              serif: ['"Instrument Serif"', 'serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+              header: ['"Bebas Neue"', 'sans-serif'],
+              modern: ['"Bodoni Moda"', 'serif'],
+            },
+            colors: {
+              brand: {
+                black: '#0A0A0A',
+                white: '#FFFFFF',
+                gray: '#F5F5F5',
+                gold: '#C5A059',
+                border: '#E8E8E8'
+              }
+            },
+            animation: {
+              'fade-in': 'fadeIn 1.2s cubic-bezier(0.2, 0, 0.2, 1) forwards',
+              'fade-up': 'fadeUp 1.2s cubic-bezier(0.2, 0, 0.2, 1) forwards',
+              'reveal-left': 'revealLeft 1.5s cubic-bezier(0.77, 0, 0.175, 1) forwards',
+              'float': 'float 6s ease-in-out infinite',
+              'shine': 'shine 2.5s linear infinite',
+              'scale-up': 'scaleUp 1s ease-out forwards',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              fadeUp: {
+                '0%': { opacity: '0', transform: 'translateY(60px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              revealLeft: {
+                '0%': { transform: 'translateX(-100%)' },
+                '100%': { transform: 'translateX(0)' }
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-20px)' },
+              },
+              shine: {
+                '0%': { transform: 'translateX(-200%)' },
+                '100%': { transform: 'translateX(200%)' }
+              },
+              scaleUp: {
+                '0%': { transform: 'scale(0.95)', opacity: '0' },
+                '100%': { transform: 'scale(1)', opacity: '1' }
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background-color: #FFFFFF;
+        color: #0A0A0A;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        overflow-x: hidden;
+      }
+      ::selection {
+        background-color: #C5A059;
+        color: #FFFFFF;
+      }
+      ::-webkit-scrollbar {
+        width: 3px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #FFFFFF;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #0A0A0A;
+      }
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .glass {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+      .text-outline {
+        -webkit-text-stroke: 1px #0A0A0A;
+        color: transparent;
+      }
+      .perspective-text {
+        perspective: 1000px;
+      }
+      .leaflet-container {
+        font-family: inherit;
+        background: #f9f9f9;
+        filter: grayscale(1) invert(0.05);
+      }
+      .active-marker {
+        filter: hue-rotate(180deg) brightness(1.2) scale(1.5);
+        transition: all 0.5s ease;
+      }
+      .editorial-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "@google/genai": "https://esm.sh/@google/genai@^1.39.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

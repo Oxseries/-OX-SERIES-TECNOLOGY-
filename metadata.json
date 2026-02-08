@@ -1,0 +1,7 @@
+{
+  "name": "2026 Ox Series Luxury Skincare",
+  "description": "Premium collagen serum peeling landing page with AI skincare assistant and pharmacy locator.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}

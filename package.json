@@ -1,8 +1,9 @@
 {
-  "name": "homepage":"https://oxseries.github.io/-OX-SERIES-TECNOLOGY-/",
+  "name": "ox-series-technology",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://oxseries.github.io/-OX-SERIES-TECNOLOGY-/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

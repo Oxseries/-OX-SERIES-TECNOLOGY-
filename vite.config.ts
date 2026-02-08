@@ -1,24 +1,13 @@
-{
-  "name": "ox-series-technology",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "homepage": "https://oxseries.github.io/-OX-SERIES-TECNOLOGY-/",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
+
+export default defineConfig({
+  plugins: [react()],
+  base: '/-OX-SERIES-TECNOLOGY-/',
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
   },
-  "dependencies": {
-    "react-dom": "^19.2.4",
-    "react": "^19.2.4",
-    "@google/genai": "^1.39.0"
-  },
-  "devDependencies": {
-    "@types/node": "^22.14.0",
-    "@vitejs/plugin-react": "^5.0.0",
-    "typescript": "~5.8.2",
-    "vite": "^6.2.0",
-    "path": "^0.12.7"
-  }
-}
+});

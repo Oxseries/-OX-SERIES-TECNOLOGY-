@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { EXCELLENCE_V2_INGREDIENTS } from '../constants';
+import { EXCELLENCE_V2_INGREDIENTS } from './constants';
 
 const TELEGRAM_BOT_TOKEN = '8268291221:AAGjOqG-nKzXxjbd4uuZ0A9OBnRtRnE7Lco'; 
 const TELEGRAM_CHAT_ID = '1205997493'; 

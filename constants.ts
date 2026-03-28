@@ -110,7 +110,18 @@ export const TRANSLATIONS = {
     sku: 'Ürün Kodu',
     role_label: 'Yetki Ünvanı',
     role_pharmacist: 'Eczacı',
-    role_assistant: 'Eczacı Kalfası'
+    role_assistant: 'Eczacı Kalfası',
+    wa_title: 'WhatsApp Toplu Mesaj',
+    wa_upload_vcf: 'VCF Dosyası Yükle',
+    wa_template_label: 'Mesaj Taslağı',
+    wa_template_placeholder: 'Merhaba {name}, size özel bir teklifimiz var...',
+    wa_template_hint: 'Kişinin adını eklemek için {name} kullanın.',
+    wa_contact_count: 'Kayıtlı Kişi Sayısı',
+    wa_btn_send: 'Mesajı Gönder',
+    wa_btn_clear: 'Listeyi Temizle',
+    wa_no_contacts: 'Henüz kişi eklenmedi. Lütfen VCF dosyası yükleyin.',
+    wa_dashboard_link: 'WhatsApp Aracı',
+    wa_product_link: 'Ürün Listesi'
   },
   en: {
     nav_collection: 'Collection',
@@ -220,7 +231,18 @@ export const TRANSLATIONS = {
     sku: 'SKU',
     role_label: 'Authority Title',
     role_pharmacist: 'Pharmacist',
-    role_assistant: 'Pharmacy Assistant'
+    role_assistant: 'Pharmacy Assistant',
+    wa_title: 'WhatsApp Bulk Message',
+    wa_upload_vcf: 'Upload VCF File',
+    wa_template_label: 'Message Template',
+    wa_template_placeholder: 'Hello {name}, we have a special offer for you...',
+    wa_template_hint: 'Use {name} to include the person\'s name.',
+    wa_contact_count: 'Contact Count',
+    wa_btn_send: 'Send Message',
+    wa_btn_clear: 'Clear List',
+    wa_no_contacts: 'No contacts added yet. Please upload a VCF file.',
+    wa_dashboard_link: 'WhatsApp Tool',
+    wa_product_link: 'Product List'
   }
 };
 

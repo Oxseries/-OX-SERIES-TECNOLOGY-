@@ -3,8 +3,8 @@ import { ADVANTAGE_PRODUCTS, INGREDIENTS_SERUM_TR, INGREDIENTS_CLEANSER_TR, INGR
 import { AdvantageProduct, Ingredient, Language } from './types';
 import WhatsAppBulkSender from './WhatsAppBulkSender';
 
-const TELEGRAM_BOT_TOKEN = '8268291221:AAGjOqG-nKzXxjbd4uuZ0A9OBnRtRnE7Lco'; 
-const TELEGRAM_CHAT_ID = '1205997493'; 
+const TELEGRAM_BOT_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_ID = import.meta.env.VITE_TELEGRAM_CHAT_ID;
 const UTS_IMAGE_URL = "https://lh3.googleusercontent.com/d/14KRnNHIhGgurbILLRbwl3wEm8jrTgcue";
 
 interface AdvantageModalProps {
@@ -323,37 +323,37 @@ const AdvantageModal: React.FC<AdvantageModalProps> = ({ isOpen, onClose, t, lan
           /* Dashboard View - Full Screen */
           <div className="min-h-screen p-8 md:p-16 lg:p-24 flex flex-col bg-white">
             
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 gap-12 border-b border-brand-border pb-16">
-              <div className="space-y-8">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 md:mb-24 gap-8 md:gap-12 border-b border-brand-border pb-10 md:pb-16">
+              <div className="space-y-6 md:space-y-8">
                 <div className="inline-flex items-center gap-4 px-5 py-2 bg-brand-gold/10 text-brand-gold rounded-full border border-brand-gold/20">
                   <span className="w-2 h-2 rounded-full bg-brand-gold animate-pulse"></span>
-                  <span className="text-[10px] font-bold tracking-[0.4em] uppercase">{t('app_exclusive_badge')} ACCESS</span>
+                  <span className="text-[9px] md:text-[10px] font-bold tracking-[0.4em] uppercase">{t('app_exclusive_badge')} ACCESS</span>
                 </div>
-                <h2 className="text-7xl md:text-9xl lg:text-[12rem] font-header font-black tracking-tighter uppercase leading-[0.8] text-brand-black">
+                <h2 className="text-5xl md:text-9xl lg:text-[12rem] font-header font-black tracking-tighter uppercase leading-[0.8] text-brand-black">
                   Premier <br /> <span className="text-brand-gold italic">Advantage</span>
                 </h2>
-                <div className="flex flex-wrap items-center gap-6 pt-4">
-                  <div className="px-6 py-2 bg-brand-black text-white rounded-full text-[11px] font-bold uppercase tracking-[0.3em] shadow-xl">
-                    PARTNER MARGIN: %60
+                <div className="flex flex-wrap items-center gap-4 md:gap-6 pt-2 md:pt-4">
+                  <div className="px-5 py-2 md:px-6 md:py-2 bg-brand-black text-white rounded-full text-[9px] md:text-[11px] font-bold uppercase tracking-[0.3em] shadow-xl">
+                    MARGIN: %60
                   </div>
 
-                  <div className="flex bg-brand-gray p-1 rounded-full border border-brand-black/5">
+                  <div className="flex bg-brand-gray p-1 rounded-full border border-brand-black/5 shadow-inner">
                     <button
                       onClick={() => setView('products')}
-                      className={`px-6 py-2 rounded-full text-[9px] font-black uppercase tracking-widest transition-all ${view === 'products' ? 'bg-brand-black text-white' : 'text-brand-black/30'}`}
+                      className={`px-4 py-2 md:px-6 md:py-2 rounded-full text-[8px] md:text-[9px] font-black uppercase tracking-widest transition-all duration-500 ${view === 'products' ? 'bg-brand-black text-white shadow-lg' : 'text-brand-black/30'}`}
                     >
                       {t('wa_product_link')}
                     </button>
                     <button
                       onClick={() => setView('whatsapp')}
-                      className={`px-6 py-2 rounded-full text-[9px] font-black uppercase tracking-widest transition-all ${view === 'whatsapp' ? 'bg-brand-black text-white' : 'text-brand-black/30'}`}
+                      className={`px-4 py-2 md:px-6 md:py-2 rounded-full text-[8px] md:text-[9px] font-black uppercase tracking-widest transition-all duration-500 ${view === 'whatsapp' ? 'bg-brand-black text-white shadow-lg' : 'text-brand-black/30'}`}
                     >
                       {t('wa_dashboard_link')}
                     </button>
                   </div>
 
-                  <div className="text-brand-black/30 text-xs font-mono font-bold tracking-widest uppercase hidden lg:block">
-                    OX LABORATORY STANDARDS V3.0
+                  <div className="text-brand-black/30 text-[8px] md:text-xs font-mono font-bold tracking-widest uppercase hidden sm:block">
+                    V3.0
                   </div>
                 </div>
               </div>

@@ -1,6 +1,6 @@
 
 import React, { useRef, useState } from 'react';
-import { INGREDIENTS_SERUM_TR, INGREDIENTS_SERUM_EN } from '../constants';
+import { INGREDIENTS_SERUM_TR, INGREDIENTS_SERUM_EN } from './constants';
 
 interface RitualProps {
   t: (key: any) => string;

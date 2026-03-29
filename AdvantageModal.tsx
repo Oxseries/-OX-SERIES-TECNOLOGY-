@@ -321,15 +321,15 @@ const AdvantageModal: React.FC<AdvantageModalProps> = ({ isOpen, onClose, t, lan
           </div>
         ) : (
           /* Dashboard View - Full Screen */
-          <div className="min-h-screen p-8 md:p-16 lg:p-24 flex flex-col bg-white">
+          <div className="min-h-screen p-8 md:p-16 lg:px-32 lg:py-20 flex flex-col bg-white">
             
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 md:mb-24 gap-8 md:gap-12 border-b border-brand-border pb-10 md:pb-16">
-              <div className="space-y-6 md:space-y-8">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 md:mb-20 gap-8 md:gap-12 border-b border-brand-border pb-10 md:pb-16 relative">
+              <div className="space-y-6 md:space-y-10">
                 <div className="inline-flex items-center gap-4 px-5 py-2 bg-brand-gold/10 text-brand-gold rounded-full border border-brand-gold/20">
                   <span className="w-2 h-2 rounded-full bg-brand-gold animate-pulse"></span>
                   <span className="text-[9px] md:text-[10px] font-bold tracking-[0.4em] uppercase">{t('app_exclusive_badge')} ACCESS</span>
                 </div>
-                <h2 className="text-5xl md:text-9xl lg:text-[12rem] font-header font-black tracking-tighter uppercase leading-[0.8] text-brand-black">
+                <h2 className="text-5xl md:text-9xl lg:text-[14rem] font-header font-black tracking-tighter uppercase leading-[0.75] text-brand-black">
                   Premier <br /> <span className="text-brand-gold italic">Advantage</span>
                 </h2>
                 <div className="flex flex-wrap items-center gap-4 md:gap-6 pt-2 md:pt-4">
@@ -384,7 +384,7 @@ const AdvantageModal: React.FC<AdvantageModalProps> = ({ isOpen, onClose, t, lan
               </div>
             </div>
 
-            <div className="relative flex-1">
+            <div className="relative flex-1 py-10 lg:py-16">
               {view === 'products' ? (
                 <>
                   <div 

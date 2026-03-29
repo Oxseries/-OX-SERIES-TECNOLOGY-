@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import { INGREDIENTS_TR, INGREDIENTS_EN } from '../constants';
-import { Language } from '../types';
+import { INGREDIENTS_TR, INGREDIENTS_EN } from './constants';
+import { Language } from './types';
 
 interface IngredientsProps {
   t: (key: any) => string;

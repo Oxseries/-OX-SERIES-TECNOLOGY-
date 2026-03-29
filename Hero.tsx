@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Language } from '../types';
+import { Language } from './types';
 
 interface HeroProps {
   t: (key: any) => string;

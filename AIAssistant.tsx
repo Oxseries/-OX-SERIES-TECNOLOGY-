@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { getSkincareAdvice } from '../geminiService';
-import { Message } from '../types';
+import { getSkincareAdvice } from './geminiService';
+import { Message } from './types';
 
 interface AIAssistantProps {
   lang: 'tr' | 'en';

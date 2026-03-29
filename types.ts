@@ -35,3 +35,8 @@ export interface Message {
   role: 'user' | 'assistant';
   content: string;
 }
+
+export interface Contact {
+  name: string;
+  phone: string;
+}

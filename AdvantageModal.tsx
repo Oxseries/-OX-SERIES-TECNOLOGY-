@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ADVANTAGE_PRODUCTS, INGREDIENTS_SERUM_TR, INGREDIENTS_CLEANSER_TR, INGREDIENTS_MOISTURIZER_TR, INGREDIENTS_VEGAN_SERUM_TR } from '../constants';
-import { AdvantageProduct, Ingredient, Language } from '../types';
+import { ADVANTAGE_PRODUCTS, INGREDIENTS_SERUM_TR, INGREDIENTS_CLEANSER_TR, INGREDIENTS_MOISTURIZER_TR, INGREDIENTS_VEGAN_SERUM_TR } from './constants';
+import { AdvantageProduct, Ingredient, Language } from './types';
+import WhatsAppBulkSender from './WhatsAppBulkSender';
 
-const TELEGRAM_BOT_TOKEN = '8268291221:AAGjOqG-nKzXxjbd4uuZ0A9OBnRtRnE7Lco'; 
-const TELEGRAM_CHAT_ID = '1205997493'; 
+const TELEGRAM_BOT_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_ID = import.meta.env.VITE_TELEGRAM_CHAT_ID;
 const UTS_IMAGE_URL = "https://lh3.googleusercontent.com/d/14KRnNHIhGgurbILLRbwl3wEm8jrTgcue";
 
 interface AdvantageModalProps {
@@ -20,6 +21,7 @@ const AdvantageModal: React.FC<AdvantageModalProps> = ({ isOpen, onClose, t, lan
   const [isVerified, setIsVerified] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [error, setError] = useState(false);
+  const [view, setView] = useState<'products' | 'whatsapp'>('products');
   
   const [pharmacyName, setPharmacyName] = useState('');
   const [contactInfo, setContactInfo] = useState('');
@@ -319,23 +321,39 @@ const AdvantageModal: React.FC<AdvantageModalProps> = ({ isOpen, onClose, t, lan
           </div>
         ) : (
           /* Dashboard View - Full Screen */
-          <div className="min-h-screen p-8 md:p-16 lg:p-24 flex flex-col bg-white">
+          <div className="min-h-screen p-8 md:p-16 lg:px-32 lg:py-20 flex flex-col bg-white">
             
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 gap-12 border-b border-brand-border pb-16">
-              <div className="space-y-8">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 md:mb-20 gap-8 md:gap-12 border-b border-brand-border pb-10 md:pb-16 relative">
+              <div className="space-y-6 md:space-y-10">
                 <div className="inline-flex items-center gap-4 px-5 py-2 bg-brand-gold/10 text-brand-gold rounded-full border border-brand-gold/20">
                   <span className="w-2 h-2 rounded-full bg-brand-gold animate-pulse"></span>
-                  <span className="text-[10px] font-bold tracking-[0.4em] uppercase">{t('app_exclusive_badge')} ACCESS</span>
+                  <span className="text-[9px] md:text-[10px] font-bold tracking-[0.4em] uppercase">{t('app_exclusive_badge')} ACCESS</span>
                 </div>
-                <h2 className="text-7xl md:text-9xl lg:text-[12rem] font-header font-black tracking-tighter uppercase leading-[0.8] text-brand-black">
+                <h2 className="text-5xl md:text-9xl lg:text-[14rem] font-header font-black tracking-tighter uppercase leading-[0.75] text-brand-black">
                   Premier <br /> <span className="text-brand-gold italic">Advantage</span>
                 </h2>
-                <div className="flex items-center gap-6 pt-4">
-                  <div className="px-6 py-2 bg-brand-black text-white rounded-full text-[11px] font-bold uppercase tracking-[0.3em] shadow-xl">
-                    PARTNER MARGIN: %60
+                <div className="flex flex-wrap items-center gap-4 md:gap-6 pt-2 md:pt-4">
+                  <div className="px-5 py-2 md:px-6 md:py-2 bg-brand-black text-white rounded-full text-[9px] md:text-[11px] font-bold uppercase tracking-[0.3em] shadow-xl">
+                    MARGIN: %60
                   </div>
-                  <div className="text-brand-black/30 text-xs font-mono font-bold tracking-widest uppercase">
-                    OX LABORATORY STANDARDS V3.0
+
+                  <div className="flex bg-brand-gray p-1 rounded-full border border-brand-black/5 shadow-inner">
+                    <button
+                      onClick={() => setView('products')}
+                      className={`px-4 py-2 md:px-6 md:py-2 rounded-full text-[8px] md:text-[9px] font-black uppercase tracking-widest transition-all duration-500 ${view === 'products' ? 'bg-brand-black text-white shadow-lg' : 'text-brand-black/30'}`}
+                    >
+                      {t('wa_product_link')}
+                    </button>
+                    <button
+                      onClick={() => setView('whatsapp')}
+                      className={`px-4 py-2 md:px-6 md:py-2 rounded-full text-[8px] md:text-[9px] font-black uppercase tracking-widest transition-all duration-500 ${view === 'whatsapp' ? 'bg-brand-black text-white shadow-lg' : 'text-brand-black/30'}`}
+                    >
+                      {t('wa_dashboard_link')}
+                    </button>
+                  </div>
+
+                  <div className="text-brand-black/30 text-[8px] md:text-xs font-mono font-bold tracking-widest uppercase hidden sm:block">
+                    V3.0
                   </div>
                 </div>
               </div>
@@ -366,103 +384,109 @@ const AdvantageModal: React.FC<AdvantageModalProps> = ({ isOpen, onClose, t, lan
               </div>
             </div>
 
-            <div className="relative flex-1">
-              <div 
-                ref={scrollRef}
-                className="flex gap-10 md:gap-16 lg:gap-20 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-24 -mx-8 px-8 md:mx-0 md:px-0"
-              >
-                {ADVANTAGE_PRODUCTS.map((prod, i) => (
+            <div className="relative flex-1 py-10 lg:py-16">
+              {view === 'products' ? (
+                <>
                   <div 
-                    key={i} 
-                    className="flex-shrink-0 w-[90vw] md:w-[540px] lg:w-[600px] snap-center bg-white border border-brand-border rounded-[4rem] overflow-hidden hover:shadow-[0_80px_120px_-30px_rgba(0,0,0,0.1)] transition-all duration-1000 flex flex-col group relative"
+                    ref={scrollRef}
+                    className="flex gap-10 md:gap-16 lg:gap-20 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-24 -mx-8 px-8 md:mx-0 md:px-0"
                   >
-                    <div className="aspect-square bg-brand-gray relative overflow-hidden flex-shrink-0">
-                      <img 
-                        src={prod.image} 
-                        alt={prod.name} 
-                        className="w-full h-full object-cover group-hover:scale-105 transition-all duration-[2s]" 
-                      />
-                      <div className="absolute top-10 right-10 px-6 py-3 bg-brand-black/80 backdrop-blur-xl text-white text-[10px] font-bold uppercase tracking-[0.3em] rounded-full shadow-2xl z-20">
-                        {prod.volume}
-                      </div>
-                      <div className="absolute top-10 left-10 w-16 h-16 bg-white/90 backdrop-blur-xl rounded-[2rem] flex items-center justify-center text-4xl shadow-2xl z-20 transition-transform duration-700 group-hover:rotate-12">{prod.emoji}</div>
-                      
-                      <div className="absolute bottom-10 left-10 right-10 flex gap-4 z-20 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700">
-                        <button 
-                          onClick={() => setQuickViewProduct(prod)}
-                          className="flex-1 py-5 bg-white text-brand-black text-[10px] font-black uppercase tracking-[0.4em] rounded-2xl shadow-2xl hover:bg-brand-gold hover:text-white active:scale-95 transition-all"
-                        >
-                          {t('product_quick_view')}
-                        </button>
-                        <button 
-                          onClick={() => setIngredientListPopup({name: prod.name, list: getProductIngredients(prod.name)})}
-                          className="p-5 bg-brand-black text-white text-xl rounded-2xl shadow-2xl hover:bg-brand-gold active:scale-95 transition-all"
-                        >
-                          🧪
-                        </button>
-                      </div>
-                    </div>
+                    {ADVANTAGE_PRODUCTS.map((prod, i) => (
+                      <div
+                        key={i}
+                        className="flex-shrink-0 w-[90vw] md:w-[540px] lg:w-[600px] snap-center bg-white border border-brand-border rounded-[4rem] overflow-hidden hover:shadow-[0_80px_120px_-30px_rgba(0,0,0,0.1)] transition-all duration-1000 flex flex-col group relative"
+                      >
+                        <div className="aspect-square bg-brand-gray relative overflow-hidden flex-shrink-0">
+                          <img
+                            src={prod.image}
+                            alt={prod.name}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-all duration-[2s]"
+                          />
+                          <div className="absolute top-10 right-10 px-6 py-3 bg-brand-black/80 backdrop-blur-xl text-white text-[10px] font-bold uppercase tracking-[0.3em] rounded-full shadow-2xl z-20">
+                            {prod.volume}
+                          </div>
+                          <div className="absolute top-10 left-10 w-16 h-16 bg-white/90 backdrop-blur-xl rounded-[2rem] flex items-center justify-center text-4xl shadow-2xl z-20 transition-transform duration-700 group-hover:rotate-12">{prod.emoji}</div>
 
-                    <div className="p-12 md:p-16 flex-1 flex flex-col space-y-10">
-                      <div className="space-y-6">
-                        <h4 className="text-5xl md:text-7xl font-header font-black uppercase tracking-widest text-brand-black leading-none">{prod.name}</h4>
-                        <div className="space-y-4">
-                          <p className={`text-base md:text-lg text-brand-black/40 font-medium leading-relaxed transition-all duration-700 ${expandedItems[i] ? '' : 'line-clamp-2'}`}>
-                            {expandedItems[i] ? (prod.detailedDescription || prod.description) : prod.description}
-                          </p>
-                          <button 
-                            onClick={() => toggleExpand(i)}
-                            className="text-[11px] font-header font-black text-brand-gold uppercase tracking-[0.3em] hover:opacity-60 transition-opacity border-b border-brand-gold/20 pb-1"
-                          >
-                            {expandedItems[i] ? t('btn_show_less') : t('btn_learn_more')}
-                          </button>
+                          <div className="absolute bottom-10 left-10 right-10 flex gap-4 z-20 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700">
+                            <button
+                              onClick={() => setQuickViewProduct(prod)}
+                              className="flex-1 py-5 bg-white text-brand-black text-[10px] font-black uppercase tracking-[0.4em] rounded-2xl shadow-2xl hover:bg-brand-gold hover:text-white active:scale-95 transition-all"
+                            >
+                              {t('product_quick_view')}
+                            </button>
+                            <button
+                              onClick={() => setIngredientListPopup({name: prod.name, list: getProductIngredients(prod.name)})}
+                              className="p-5 bg-brand-black text-white text-xl rounded-2xl shadow-2xl hover:bg-brand-gold active:scale-95 transition-all"
+                            >
+                              🧪
+                            </button>
+                          </div>
+                        </div>
+
+                        <div className="p-12 md:p-16 flex-1 flex flex-col space-y-10">
+                          <div className="space-y-6">
+                            <h4 className="text-5xl md:text-7xl font-header font-black uppercase tracking-widest text-brand-black leading-none">{prod.name}</h4>
+                            <div className="space-y-4">
+                              <p className={`text-base md:text-lg text-brand-black/40 font-medium leading-relaxed transition-all duration-700 ${expandedItems[i] ? '' : 'line-clamp-2'}`}>
+                                {expandedItems[i] ? (prod.detailedDescription || prod.description) : prod.description}
+                              </p>
+                              <button
+                                onClick={() => toggleExpand(i)}
+                                className="text-[11px] font-header font-black text-brand-gold uppercase tracking-[0.3em] hover:opacity-60 transition-opacity border-b border-brand-gold/20 pb-1"
+                              >
+                                {expandedItems[i] ? t('btn_show_less') : t('btn_learn_more')}
+                              </button>
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-2 gap-x-12 gap-y-10 pt-10 border-t border-brand-border mt-auto">
+                            <div className="space-y-2">
+                                <span className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-20 block">{t('price')}</span>
+                                <p className="text-3xl font-header font-black tracking-widest text-brand-gold uppercase">{prod.price}</p>
+                            </div>
+                            <div className="space-y-2">
+                                <span className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-20 block">{t('margin')}</span>
+                                <p className="text-3xl font-header font-black tracking-widest uppercase">{prod.margin}</p>
+                            </div>
+                            <div className="space-y-1">
+                                <span className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-20 block">{t('cost')}</span>
+                                <p className="text-lg font-medium opacity-50">{prod.cost}</p>
+                            </div>
+                            <div className="space-y-1">
+                                <span className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-20 block">{t('profit')}</span>
+                                <p className="text-lg font-bold text-green-600">+{prod.profit}</p>
+                            </div>
+                          </div>
                         </div>
                       </div>
-
-                      <div className="grid grid-cols-2 gap-x-12 gap-y-10 pt-10 border-t border-brand-border mt-auto">
-                         <div className="space-y-2">
-                            <span className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-20 block">{t('price')}</span>
-                            <p className="text-3xl font-header font-black tracking-widest text-brand-gold uppercase">{prod.price}</p>
-                         </div>
-                         <div className="space-y-2">
-                            <span className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-20 block">{t('margin')}</span>
-                            <p className="text-3xl font-header font-black tracking-widest uppercase">{prod.margin}</p>
-                         </div>
-                         <div className="space-y-1">
-                            <span className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-20 block">{t('cost')}</span>
-                            <p className="text-lg font-medium opacity-50">{prod.cost}</p>
-                         </div>
-                         <div className="space-y-1">
-                            <span className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-20 block">{t('profit')}</span>
-                            <p className="text-lg font-bold text-green-600">+{prod.profit}</p>
-                         </div>
-                      </div>
-                    </div>
+                    ))}
                   </div>
-                ))}
-              </div>
 
-              <div className="hidden lg:flex absolute top-1/2 -translate-y-1/2 -left-12 -right-12 justify-between pointer-events-none">
-                <button 
-                  onClick={() => scrollGallery('left')}
-                  className="w-20 h-20 rounded-full bg-white border border-brand-border flex items-center justify-center hover:bg-brand-black hover:text-white transition-all duration-700 shadow-3xl pointer-events-auto"
-                >
-                  <svg className="rotate-180" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </button>
-                <button 
-                  onClick={() => scrollGallery('right')}
-                  className="w-20 h-20 rounded-full bg-white border border-brand-border flex items-center justify-center hover:bg-brand-black hover:text-white transition-all duration-700 shadow-3xl pointer-events-auto"
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </button>
-              </div>
-            </div>
+                  <div className="hidden lg:flex absolute top-1/2 -translate-y-1/2 -left-12 -right-12 justify-between pointer-events-none">
+                    <button
+                      onClick={() => scrollGallery('left')}
+                      className="w-20 h-20 rounded-full bg-white border border-brand-border flex items-center justify-center hover:bg-brand-black hover:text-white transition-all duration-700 shadow-3xl pointer-events-auto"
+                    >
+                      <svg className="rotate-180" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                    <button
+                      onClick={() => scrollGallery('right')}
+                      className="w-20 h-20 rounded-full bg-white border border-brand-border flex items-center justify-center hover:bg-brand-black hover:text-white transition-all duration-700 shadow-3xl pointer-events-auto"
+                    >
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                  </div>
 
-            <div className="w-full max-w-sm mx-auto h-1.5 bg-brand-gray rounded-full overflow-hidden mt-12 mb-20 relative">
-              <div 
-                className="h-full bg-brand-black transition-all duration-500 ease-out" 
-                style={{ width: `${Math.max(10, scrollProgress)}%` }}
-              ></div>
+                  <div className="w-full max-w-sm mx-auto h-1.5 bg-brand-gray rounded-full overflow-hidden mt-12 mb-20 relative">
+                    <div
+                      className="h-full bg-brand-black transition-all duration-500 ease-out"
+                      style={{ width: `${Math.max(10, scrollProgress)}%` }}
+                    ></div>
+                  </div>
+                </>
+              ) : (
+                <WhatsAppBulkSender t={t} />
+              )}
             </div>
           </div>
         )}

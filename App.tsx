@@ -7,6 +7,8 @@ import Ingredients from './Ingredients';
 import Ritual from './Ritual';
 import ApplicationRequest from './ApplicationRequest';
 import PharmacyLocator from './PharmacyLocator';
+import AIAssistant from './AIAssistant';
+import AdvantageModal from './AdvantageModal';
 import Footer from './Footer';
 
 const App: React.FC = () => {
